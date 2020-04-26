@@ -23,12 +23,22 @@ public class Wallet {
     private Account account;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
+    @JsonIgnoreProperties(value = {"wallet"})
     private List<Transaction> transaction;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
+    @JsonIgnoreProperties(value = {"wallet"})
     private List<History> histories;
 
     public Wallet() {
+    }
+
+    public List<Transaction> getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(List<Transaction> transaction) {
+        this.transaction = transaction;
     }
 
     public String getId() {

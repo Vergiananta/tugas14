@@ -8,13 +8,11 @@ import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
 import com.Sepotipi.tugas14.repository.WalletRepository;
 import com.Sepotipi.tugas14.service.HistoryService;
 import com.Sepotipi.tugas14.service.WalletService;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -35,20 +33,22 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public void topUpWallet(Wallet wallet, Double topUpBalance) {
         History history = new History();
-        if (wallet.getAccount().getActive().equals(true)){
+        wallet=walletRepository.findById(wallet.getId()).get();
+        if (wallet.getAccount().getActive()==true){
             wallet.setBalance(wallet.getBalance()+topUpBalance);
             history.setType(HistoryTypeEnum.TOPUP);
             history.setTrxDate(new Timestamp(new Date().getTime()));
             history.setAmount(topUpBalance);
-            walletRepository.save(wallet);
+            history.setWallet(wallet);
             historyService.saveHistory(history);
+            walletRepository.save(wallet);
         }
     }
 
     @Override
     public void withDrawalWallet(Wallet wallet, Double withDrawal) {
         History history = new History();
-        if (wallet.getAccount().getActive().equals(true)){
+        if (wallet.getAccount().getActive()==true){
             wallet.setBalance(wallet.getBalance()-withDrawal);
             history.setType(HistoryTypeEnum.WITHDRAWAL);
             history.setTrxDate(new Timestamp(new Date().getTime()));

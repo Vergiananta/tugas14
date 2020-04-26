@@ -13,6 +13,7 @@ public interface ArtistService {
     public Artist getArtistById (String id);
     public void deleteArtist(String id);
     public Page<Artist> searchArtist(Artist artist, Pageable pageable);
-    public Artist saveArtistWithImage(MultipartFile file, String entity) throws IOException;
+//    public Artist saveArtistWithImage(MultipartFile file, String entity) throws IOException;
+    public void saveArtistWithImage(MultipartFile file, Artist entity) throws IOException;
 
 }

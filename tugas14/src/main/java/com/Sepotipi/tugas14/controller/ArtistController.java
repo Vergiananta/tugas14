@@ -40,12 +40,20 @@ public class ArtistController {
     }
 
 
-    @PostMapping("/img")
-    public Artist saveArtistContaintImage(@RequestPart MultipartFile file, @RequestPart String photo) throws IOException {
+//    @PostMapping("/img")
+//    public Artist saveArtistContaintImage(@RequestPart MultipartFile file, @RequestPart String photo) throws IOException {
+//
+//        return artistService.saveArtistWithImage(file,photo);
+//
+//    }
 
-        return artistService.saveArtistWithImage(file,photo);
+    @PostMapping("/img")
+    public void saveArtistContaintImage(@RequestParam(value = "file") MultipartFile file, @RequestParam Artist photo) throws IOException {
+        artistService.saveArtistWithImage(file,photo);
+//        return artistService.saveArtistWithImage(file,photo);
 
     }
+
     @GetMapping("/search")
     public Page<Artist> searchByName(@RequestBody Artist searchForm, @RequestParam(name = "page") Integer page, @RequestParam(name = "size") Integer size){
         Pageable pageable = PageRequest.of(page, size);
