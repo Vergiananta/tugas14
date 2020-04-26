@@ -2,6 +2,7 @@ package com.Sepotipi.tugas14.service.impl;
 
 import com.Sepotipi.tugas14.entity.Profile;
 import com.Sepotipi.tugas14.enums.GenderEnum;
+import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
 import com.Sepotipi.tugas14.repository.ProfileRepository;
 import com.Sepotipi.tugas14.service.ProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,8 +21,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -52,16 +55,31 @@ class ProfileServiceImplTest {
         List<Profile> profiles = new ArrayList<>();
         profiles.add(profile);
 
-        Mockito.when(profileRepository.findAll()).thenReturn(profiles);
+        when(profileRepository.findAll()).thenReturn(profiles);
         assertEquals(1, profileRepository.findAll().size());
     }
 
     @Test
     void getProfile() {
+        Profile profile = new Profile();
+        profile.setFirstName("budi");
+        profile.setMiddleName("setiawan");
+        profile.setLastName("gunawan");
+        profile.setBirthDate(new Date());
+        profile.setEmail("budi@gmail.com");
+        profile.setGender(GenderEnum.MALE);
+        profile.setLocation("Jakarta");
+
+        profileRepository.save(profile);
+
+        when(profileRepository.findById(profile.getId())).thenReturn(Optional.of(profile));
     }
 
     @Test
-    void getAllProfile() {
+    void getProfile_shouldThrowException_when_givenIdNotExist() {
+        assertThrows(ResourceNotFoundException.class, ()->{
+            profileService.getProfile("asal");
+        });
     }
 
     @Test

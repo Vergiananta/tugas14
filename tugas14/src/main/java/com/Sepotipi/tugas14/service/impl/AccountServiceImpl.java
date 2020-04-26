@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -22,12 +24,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccount(String id) {
-        Account account = null;
+       Account accounts;
 
         if (accountRepository.findById(id).isPresent()) {
-            account = accountRepository.findById(id).get();
+            accounts = accountRepository.findById(id).get();
         } else throw new ResourceNotFoundException(id, Account.class);
-        return account;
+        return accounts;
     }
 
     @Override

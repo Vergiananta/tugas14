@@ -36,8 +36,7 @@ public class Profile {
 
     private String location;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "profile")
     private Account account;
 
     public Profile() {

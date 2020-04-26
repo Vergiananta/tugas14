@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.service.impl;
 
+import com.Sepotipi.tugas14.entity.Account;
 import com.Sepotipi.tugas14.entity.Profile;
 import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
 import com.Sepotipi.tugas14.repository.ProfileRepository;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -24,7 +27,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Profile getProfile(String id) {
-        Profile profile = profileRepository.findById(id).get();
+        Profile profile;
+        if( profileRepository.findById(id).isPresent()) {
+          profile = profileRepository.findById(id).get();
+        }  else throw new ResourceNotFoundException(id, Profile.class);
         return profile;
     }
 

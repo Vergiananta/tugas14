@@ -17,8 +17,7 @@ public class Account {
 
     private Boolean isActive;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
     private Wallet wallet;
 
     @OneToOne(cascade = CascadeType.ALL)
