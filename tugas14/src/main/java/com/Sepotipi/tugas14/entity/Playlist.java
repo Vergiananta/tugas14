@@ -1,6 +1,7 @@
 package com.Sepotipi.tugas14.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,6 +17,8 @@ public class Playlist {
     @GenericGenerator(name = "song_uuid", strategy = "uuid")
     private String id;
     private String name;
+
+    @JsonProperty
     private Boolean isPublic;
 
     @ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
