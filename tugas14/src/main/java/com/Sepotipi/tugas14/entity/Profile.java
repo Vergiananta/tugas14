@@ -2,6 +2,7 @@ package com.Sepotipi.tugas14.entity;
 
 
 import com.Sepotipi.tugas14.enums.GenderEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -36,7 +37,8 @@ public class Profile {
 
     private String location;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "profile")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "profile")
+    @JsonIgnoreProperties(value = {"profile"})
     private Account account;
 
     public Profile() {

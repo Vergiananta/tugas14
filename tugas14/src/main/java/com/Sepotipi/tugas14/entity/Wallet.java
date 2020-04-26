@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.Transaction;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,10 +20,11 @@ public class Wallet {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
+    @JsonIgnoreProperties(value = {"wallet"})
     private Account account;
 
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
-//    private List<Transaction> transactions;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    private List<Transaction> transaction;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
     private List<History> histories;

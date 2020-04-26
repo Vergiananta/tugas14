@@ -1,6 +1,7 @@
 package com.Sepotipi.tugas14.entity;
 
 import com.Sepotipi.tugas14.enums.HistoryTypeEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,8 +25,9 @@ public class History {
     @Column(name = "trx_date")
     private Timestamp trxDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "wallet_id")
+    @JsonIgnoreProperties(value = {"histories"})
     private Wallet wallet;
 
     public History() {

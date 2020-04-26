@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,10 +22,21 @@ public class Transaction {
     @JoinColumn(name = "song_id")
     public Song item;
 
-//    private Wallet wallet;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "wallet_id",nullable = false)
+    @JsonIgnoreProperties(value = {"transaction"})
+    private Wallet wallet;
 
 
     public Transaction() {
+    }
+
+    public Wallet getWallet() {
+        return wallet;
+    }
+
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
     }
 
     public String getId() {

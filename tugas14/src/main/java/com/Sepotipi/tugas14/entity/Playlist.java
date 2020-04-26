@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -20,10 +21,21 @@ public class Playlist {
     @ManyToMany(mappedBy = "playlists", cascade = CascadeType.ALL)
     public List<Song> songs = new ArrayList<>();
 
-//    public Account author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id")
+    @JsonIgnoreProperties(value = "playlist")
+    public Account account;
 
 
     public Playlist() {
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public String getId() {

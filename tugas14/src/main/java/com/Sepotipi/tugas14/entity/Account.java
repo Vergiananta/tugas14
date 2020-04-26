@@ -1,5 +1,7 @@
 package com.Sepotipi.tugas14.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,19 +17,31 @@ public class Account {
     @GenericGenerator(name = "id_account", strategy = "uuid")
     private String id;
 
+    @JsonProperty
     private Boolean isActive;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    @JsonIgnoreProperties(value = {"account"})
     private Wallet wallet;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    @JsonIgnoreProperties(value = {"account"})
     private Profile profile;
 
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
-//    private List<Playlist> playlists;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
+    @JsonIgnoreProperties(value = {"account"})
+    private List<Playlist> playlist;
 
     public Account() {
+    }
+
+    public List<Playlist> getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(List<Playlist> playlist) {
+        this.playlist = playlist;
     }
 
     public String getId() {

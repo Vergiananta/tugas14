@@ -18,9 +18,6 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public History saveHistory(History history) {
-
-
-
         return historyRepository.save(history);
     }
 
