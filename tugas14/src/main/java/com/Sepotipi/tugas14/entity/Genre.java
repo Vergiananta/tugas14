@@ -1,5 +1,7 @@
 package com.Sepotipi.tugas14.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ public class Genre {
     private String name;
 
     @OneToMany(mappedBy = "genre", cascade = CascadeType.ALL)
+    @JsonIgnore
     public List<Song>songs = new ArrayList<>();
 
     public Genre() {

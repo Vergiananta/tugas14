@@ -21,7 +21,14 @@ public class SongServiceDBImpl implements SongService {
 
     @Override
     public Song getSongById(String id) {
-     Song song = songRepository.findById(id).get();
+        Song song = null;
+
+
+//        song.setAlbumID(song.getAlbum().getId());
+        song = songRepository.findById(id).get();
+
+
+
         return song;
     }
 
@@ -33,6 +40,7 @@ public class SongServiceDBImpl implements SongService {
 
     @Override
     public Page<Song> searchSong(Song song, Pageable pageable) {
+
       Page<Song>songs = songRepository.findAllByTitleContains(song.getTitle(), pageable);
         return songs;
     }

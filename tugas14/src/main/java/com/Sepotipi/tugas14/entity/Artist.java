@@ -1,6 +1,8 @@
 package com.Sepotipi.tugas14.entity;
 
 import com.Sepotipi.tugas14.enums.GenderEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,7 +27,11 @@ public class Artist {
     private String photo;
 
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+    @JsonIgnore
     public List<Song>songs =new ArrayList<>();
+
+    @Transient
+    private Integer countSong;
 
     public Artist() {
     }
@@ -84,6 +90,14 @@ public class Artist {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
+    }
+
+    public Integer getCountSong() {
+        return songs.size();
+    }
+
+    public void setCountSong(Integer countSong) {
+        this.countSong = countSong;
     }
 
     @Override

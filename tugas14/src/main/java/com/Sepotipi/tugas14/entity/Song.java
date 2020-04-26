@@ -1,5 +1,7 @@
 package com.Sepotipi.tugas14.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -23,15 +25,21 @@ public class Song {
 
     @ManyToOne
     @JoinColumn(name = "genre_id")
+    @JsonIgnoreProperties("songs")
     public Genre genre;
 
     @ManyToOne
     @JoinColumn(name = "artist_id")
+    @JsonIgnoreProperties("songs")
     public Artist artist;
 
     @ManyToOne
     @JoinColumn(name = "album_id")
+    @JsonIgnoreProperties("songs")
     private Album album;
+
+//    @Transient
+//    private String albumID;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "mst_song_has_playlist",joinColumns = {@JoinColumn(name = "song_id")},
@@ -107,6 +115,14 @@ public class Song {
     public void setAlbum(Album album) {
         this.album = album;
     }
+
+//    public String getAlbumID() {
+//        return albumID;
+//    }
+//
+//    public void setAlbumID(String albumID) {
+//        this.albumID = albumID;
+//    }
 
     @Override
     public boolean equals(Object o) {

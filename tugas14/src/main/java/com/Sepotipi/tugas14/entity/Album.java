@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -22,7 +23,11 @@ public class Album {
     private String image;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+    @JsonIgnore
     public List<Song> songs = new ArrayList<>();
+
+    @Transient
+    public int countSong;
 
     public Album() {
     }
@@ -81,6 +86,14 @@ public class Album {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
+    }
+
+    public int getCountSong() {
+        return songs.size();
+    }
+
+    public void setCountSong(int countSong) {
+        this.countSong = countSong;
     }
 
     @Override

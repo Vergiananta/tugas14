@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.controller;
 
+import com.Sepotipi.tugas14.entity.Artist;
 import com.Sepotipi.tugas14.entity.Song;
 import com.Sepotipi.tugas14.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,17 @@ public class SongController {
     SongService songService;
 
     @GetMapping("/{id}")
-    public Song getGenreById(@PathVariable String id){
+    public Song getSongById(@PathVariable String id){
         return songService.getSongById(id);
     }
 
     @DeleteMapping
-    public void deleteGenre(@RequestBody Song song){
+    public void deleteSong(@RequestBody Song song){
         songService.deleteSong(song.getId());
     }
 
     @PostMapping
-    public void saveGenre(@RequestBody Song song){
+    public void saveSong(@RequestBody Song song){
         songService.saveSong(song);
     }
 
