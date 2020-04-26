@@ -1,7 +1,6 @@
 package com.Sepotipi.tugas14.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.Transaction;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -23,10 +22,10 @@ public class Wallet {
     @JsonIgnoreProperties(value = {"wallet"})
     private Account account;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
     private List<Transaction> transaction;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "wallet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "wallet")
     private List<History> histories;
 
     public Wallet() {

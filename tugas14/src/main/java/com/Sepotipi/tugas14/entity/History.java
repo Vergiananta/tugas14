@@ -25,7 +25,7 @@ public class History {
     @Column(name = "trx_date")
     private Timestamp trxDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wallet_id")
     @JsonIgnoreProperties(value = {"histories"})
     private Wallet wallet;
