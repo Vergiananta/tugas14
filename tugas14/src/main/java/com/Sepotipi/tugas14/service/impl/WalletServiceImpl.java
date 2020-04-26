@@ -3,13 +3,20 @@ package com.Sepotipi.tugas14.service.impl;
 import com.Sepotipi.tugas14.entity.Account;
 import com.Sepotipi.tugas14.entity.History;
 import com.Sepotipi.tugas14.entity.Wallet;
+import com.Sepotipi.tugas14.enums.HistoryTypeEnum;
 import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
 import com.Sepotipi.tugas14.repository.WalletRepository;
+import com.Sepotipi.tugas14.service.HistoryService;
 import com.Sepotipi.tugas14.service.WalletService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Service
 public class WalletServiceImpl implements WalletService {
@@ -17,17 +24,38 @@ public class WalletServiceImpl implements WalletService {
     @Autowired
     WalletRepository walletRepository;
 
-
+    @Autowired
+    HistoryService historyService;
 
     @Override
     public void saveWallet(Wallet wallet) {
-//        if (wallet.getAccount().getActive().equals(true)) {
-//
-//            wallet.setHistories(.setAmount());
-//            wallet = walletRepository.save(wallet);
-//        } else {
-//            System.out.println("Sorry Account UnActive");
-//        }
+            walletRepository.save(wallet);
+    }
+
+    @Override
+    public void topUpWallet(Wallet wallet, Double topUpBalance) {
+        History history = new History();
+        if (wallet.getAccount().getActive().equals(true)){
+            wallet.setBalance(wallet.getBalance()+topUpBalance);
+            history.setType(HistoryTypeEnum.TOPUP);
+            history.setTrxDate(new Timestamp(new Date().getTime()));
+            history.setAmount(topUpBalance);
+            walletRepository.save(wallet);
+            historyService.saveHistory(history);
+        }
+    }
+
+    @Override
+    public void withDrawalWallet(Wallet wallet, Double withDrawal) {
+        History history = new History();
+        if (wallet.getAccount().getActive().equals(true)){
+            wallet.setBalance(wallet.getBalance()-withDrawal);
+            history.setType(HistoryTypeEnum.WITHDRAWAL);
+            history.setTrxDate(new Timestamp(new Date().getTime()));
+            history.setAmount(withDrawal);
+            walletRepository.save(wallet);
+            historyService.saveHistory(history);
+        }
     }
 
     @Override

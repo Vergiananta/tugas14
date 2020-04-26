@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.controller;
 
+import com.Sepotipi.tugas14.entity.History;
 import com.Sepotipi.tugas14.entity.Wallet;
 import com.Sepotipi.tugas14.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class WalletController {
 
     @PostMapping
     public void saveWallet(@RequestBody Wallet wallet){
+        walletService.saveWallet(wallet);
+    }
+
+    @PostMapping("/top-up")
+    public void topUpWallet(@RequestBody Wallet wallet, @RequestBody History history){
 
     }
 }
