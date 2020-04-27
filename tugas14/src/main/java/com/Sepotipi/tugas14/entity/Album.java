@@ -115,16 +115,4 @@ public class Album {
         return Objects.hash(id, title, description, releaseYear, discount, image, songs);
     }
 
-    @Override
-    public String toString() {
-        return "Album{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", discount=" + discount +
-                ", image='" + image + '\'' +
-                ", songs=" + songs +
-                '}';
-    }
 }

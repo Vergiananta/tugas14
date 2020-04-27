@@ -24,6 +24,9 @@ public class Transaction {
     @JsonIgnoreProperties(value = {"transaction"})
     public Song item;
 
+    @Transient
+    public String albumId;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "wallet_id",nullable = false)
     @JsonIgnoreProperties(value = {"transaction"})
@@ -79,6 +82,14 @@ public class Transaction {
 
     public void setItem(Song item) {
         this.item = item;
+    }
+
+    public String getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(String albumId) {
+        this.albumId = albumId;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public void topUpWallet(Wallet wallet, Double topUpBalance) {
         History history = new History();
-        wallet=walletRepository.findById(wallet.getId()).get();
+        wallet = walletRepository.findById(wallet.getId()).get();
         if (wallet.getAccount().getActive()==true){
             wallet.setBalance(wallet.getBalance()+topUpBalance);
             history.setType(HistoryTypeEnum.TOPUP);
@@ -46,6 +46,12 @@ public class WalletServiceImpl implements WalletService {
             history.setWallet(wallet);
             historyService.saveHistory(history);
             walletRepository.save(wallet);
+//
+//            history.setAmount(topUpBalance);
+//            history.setType(HistoryTypeEnum.TOPUP);
+//            history.setTrxDate(new Timestamp(new Date().getTime()));
+//            history.setWallet(wallet);
+//            historyService.saveHistory(history);
         }
     }
 

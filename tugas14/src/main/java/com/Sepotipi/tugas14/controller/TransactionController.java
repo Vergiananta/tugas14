@@ -13,13 +13,18 @@ public class TransactionController {
     TransactionService transactionService;
 
     @PostMapping("/buy-album")
-    public void buyByAlbum(@RequestBody Transaction transaction, @RequestParam String idSong, @RequestParam String idAlbum){
-        transactionService.buyByAlbum(transaction, idSong, idAlbum);
+    public void buyByAlbum(@RequestBody Transaction transaction){
+        transactionService.buyByAlbum(transaction);
     }
 
     @PostMapping("/buy-song")
-    public void buyBySong(@RequestBody Transaction transaction, @RequestParam String idSong, @RequestParam String idAlbum){
-        transactionService.buyBySong(transaction, idSong, idAlbum);
+    public void buyBySong(@RequestBody Transaction transaction){
+        transactionService.buyBySong(transaction);
+    }
+
+    @GetMapping("/{id}")
+    public void getTransaction(@PathVariable String id){
+        transactionService.getTransactionById(id);
     }
 
 }

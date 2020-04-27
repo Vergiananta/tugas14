@@ -5,10 +5,7 @@ import com.Sepotipi.tugas14.entity.*;
 import com.Sepotipi.tugas14.enums.HistoryTypeEnum;
 import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
 import com.Sepotipi.tugas14.repository.TransactionRepository;
-import com.Sepotipi.tugas14.service.AlbumService;
-import com.Sepotipi.tugas14.service.SongService;
-import com.Sepotipi.tugas14.service.TransactionService;
-import com.Sepotipi.tugas14.service.WalletService;
+import com.Sepotipi.tugas14.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,59 +33,74 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     WalletService walletService;
 
+    @Autowired
+    HistoryService historyService;
+
     @Override
-    public void buyByAlbum(Transaction transaction, String idAlbum , String idWallet) {
-        Wallet wallet = new Wallet();
-        History history =  new History();
-        Song song = songService.getSongById(transaction.getItem().getId());
-        Album album = albumService.getAlbumById(idAlbum);
+    public void buyByAlbum(Transaction transaction) {
+        Wallet wallet = walletService.getWallet(transaction.getWallet().getId());
+//        Song song = songService.getSongById(transaction.getItem().getId());
+        History history = new History();
+
+        Album album = albumService.getAlbumById(transaction.getAlbumId());
 
         for (Song song1: album.getSongs()) {
-
-            if (transaction.getWallet().getAccount().getActive() == true){
-               if (transaction.getWallet().getBalance().equals(transaction.getAmount())){
-
-                transaction.setAlbumDiscount(song.getPrice() * album.getDiscount());
-                transaction.setAmount(song.getPrice() - transaction.getAlbumDiscount());
-                transaction.setItem(song1);
-                transaction.setTrxDate(new Timestamp(new Date().getTime()));
-                transaction.setWallet(walletService.getWallet(idWallet));
-                   wallet.setBalance(transaction.getWallet().getBalance()-song.getPrice());
-                   history.setAmount(song.getPrice());
-                   history.setType(HistoryTypeEnum.PAYMENT);
-                   history.setTrxDate(new Timestamp(new Date().getTime()));
-                   history.setWallet(wallet);
-                }
-            } else throw new ResourceNotFoundException(idAlbum, Album.class);
-            transactionRepository.save(transaction);
+            if (wallet.getBalance() > song1.getPrice()){
+                Transaction transaction1 = new Transaction();
+                transaction1.setAlbumDiscount(song1.getPrice() * album.getDiscount());
+                transaction1.setAmount(song1.getPrice() - transaction1.getAlbumDiscount());
+                transaction1.setItem(song1);
+                transaction1.setTrxDate(new Timestamp(new Date().getTime()));
+                transaction1.setWallet(wallet);
+                transactionRepository.save(transaction1);
+                wallet.setBalance(wallet.getBalance()-song1.getPrice());
+                walletService.saveWallet(wallet);
+                history.setAmount(song1.getPrice());
+                history.setType(HistoryTypeEnum.PAYMENT);
+                history.setTrxDate(new Timestamp(new Date().getTime()));
+                history.setWallet(wallet);
+            }
         }
-    }
+            historyService.saveHistory(history);
+        }
+
 
     @Override
-    public void buyBySong(Transaction transaction, String idSong, String idWallet) {
-        Wallet wallet = new Wallet();
+    public void buyBySong(Transaction transaction) {
+        Wallet wallet = walletService.getWallet(transaction.getWallet().getId());
+        Song song = songService.getSongById(transaction.getItem().getId());
         History history = new History();
-        Song song = songService.getSongById(idSong);
-        if (transaction.getWallet().getAccount().getActive()==true){
-            transaction.setTrxDate(new Timestamp(new Date().getTime()));
-            transaction.setItem(songService.getSongById(idSong));
-            transaction.setWallet(walletService.getWallet(idWallet));
-            transaction.setAlbumDiscount(0.0);
-            wallet.setBalance(transaction.getWallet().getBalance()-song.getPrice());
+        Transaction transaction1 = new Transaction();
+//        transaction = transactionRepository.findById(transaction.getId()).get();
+        if (wallet.getAccount().getActive() == true) {
+            transaction1.setTrxDate(new Timestamp(new Date().getTime()));
+            transaction1.setAlbumDiscount(0.0);
+            transaction1.setItem(song);
+            transaction1.setAmount(song.getPrice());
+            transaction1.setWallet(wallet);
+            transactionRepository.save(transaction1);
+            wallet.setBalance(wallet.getBalance() - song.getPrice());
+            walletService.saveWallet(wallet);
             history.setAmount(song.getPrice());
             history.setType(HistoryTypeEnum.PAYMENT);
             history.setTrxDate(new Timestamp(new Date().getTime()));
             history.setWallet(wallet);
-        } else throw new ResourceNotFoundException(idSong, Song.class);
-        transactionRepository.save(transaction);
+            historyService.saveHistory(history);
+
+
+        }
     }
 
 
     @Override
     public Transaction getTransactionById(String id) {
         Transaction transaction;
+        Song song = new Song();
+
         if (transactionRepository.findById(id).isPresent()){
+
             transaction = transactionRepository.findById(id).get();
+            transaction.setAlbumId(song.getAlbum().getId());
         } else throw new ResourceNotFoundException(id, Transaction.class);
 
         return transaction;

@@ -2,6 +2,7 @@ package com.Sepotipi.tugas14.entity;
 
 
 import com.Sepotipi.tugas14.enums.GenderEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -33,6 +34,7 @@ public class Profile {
     private String phone;
 
     @Column(name = "birth_date")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDate;
 
     private String location;
