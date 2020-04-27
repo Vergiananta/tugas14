@@ -55,7 +55,7 @@ public class ArtistServiceDBImpl implements ArtistService {
     @Override
     public Artist saveArtistWithImage(MultipartFile file, String image) throws IOException {
         Artist artist = saveArtist(objectMapper.readValue(image, Artist.class));
-        File uploade = new File("/home/melvian/Materi/week-9/tugas14/images/Artist Photos/" + artist.getId() + ".png");
+        File uploade = new File("/home/melvian/Materi/week-9/tugas14/tugas14/images/Artist Photos/" + artist.getId() + ".png");
         file.transferTo(uploade);
         artist.setPhoto(uploade.getPath());
         return artistRepository.save(artist);
