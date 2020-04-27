@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
 import java.io.IOException;
 
 @Service
@@ -51,17 +52,17 @@ public class ArtistServiceDBImpl implements ArtistService {
         return artists;
     }
 
-//    @Override
-//    public Artist saveArtistWithImage(MultipartFile file, String image) throws IOException {
-//        Artist artist = saveArtist(objectMapper.readValue(image, Artist.class));
-//        File uploade = new File("/home/melvian/Materi/week-9/tugas14/images/Artist Photos/" + artist.getId() + ".png");
-//        file.transferTo(uploade);
-//        artist.setPhoto(uploade.getPath());
-//        return artistRepository.save(artist);
-//    }
+    @Override
+    public Artist saveArtistWithImage(MultipartFile file, String image) throws IOException {
+        Artist artist = saveArtist(objectMapper.readValue(image, Artist.class));
+        File uploade = new File("/home/melvian/Materi/week-9/tugas14/images/Artist Photos/" + artist.getId() + ".png");
+        file.transferTo(uploade);
+        artist.setPhoto(uploade.getPath());
+        return artistRepository.save(artist);
+    }
 
     @Override
-    public void saveArtistWithImage(MultipartFile file, Artist entity) throws IOException {
+    public void uploadArtistWithImage(MultipartFile file, Artist entity) throws IOException {
        try {
 
            artistRepository.save(entity);

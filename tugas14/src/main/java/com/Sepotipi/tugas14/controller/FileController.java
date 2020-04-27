@@ -31,7 +31,7 @@ public class FileController {
     ArtistService artistService;
 
 
-    @GetMapping("/artist/photo/{id}")
+    @GetMapping("/artist/img/{id}")
     public ResponseEntity<Resource> getArtistPhoto(@PathVariable String id, HttpServletResponse request){
         Artist artist = artistService.getArtistById(id);
 
