@@ -14,5 +14,6 @@ public interface ArtistService {
     public void deleteArtist(String id);
     public Page<Artist> searchArtist(Artist artist, Pageable pageable);
     public Artist saveArtistWithImage(MultipartFile file, String entity) throws IOException;
+    public void uploadArtistWithImage(MultipartFile file, Artist entity) throws IOException;
 
 }
