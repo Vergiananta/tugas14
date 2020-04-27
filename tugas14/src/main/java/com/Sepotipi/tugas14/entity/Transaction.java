@@ -16,10 +16,12 @@ public class Transaction {
     private String id;
     private Timestamp trxDate;
     private Double amount;
+    @Column(name = "album_discount")
     private Double albumDiscount;
 
     @ManyToOne
     @JoinColumn(name = "song_id")
+    @JsonIgnoreProperties(value = {"transaction"})
     public Song item;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -17,7 +17,7 @@ public class Wallet {
 
     private Double balance;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "account_id")
     @JsonIgnoreProperties(value = {"wallet"})
     private Account account;

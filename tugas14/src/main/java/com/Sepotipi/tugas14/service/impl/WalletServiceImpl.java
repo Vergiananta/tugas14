@@ -6,6 +6,7 @@ import com.Sepotipi.tugas14.entity.Wallet;
 import com.Sepotipi.tugas14.enums.HistoryTypeEnum;
 import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
 import com.Sepotipi.tugas14.repository.WalletRepository;
+import com.Sepotipi.tugas14.service.AccountService;
 import com.Sepotipi.tugas14.service.HistoryService;
 import com.Sepotipi.tugas14.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,12 @@ public class WalletServiceImpl implements WalletService {
     @Autowired
     HistoryService historyService;
 
+    @Autowired
+    AccountService accountService;
+
     @Override
     public void saveWallet(Wallet wallet) {
-            walletRepository.save(wallet);
+        walletRepository.save(wallet);
     }
 
     @Override
@@ -48,11 +52,13 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public void withDrawalWallet(Wallet wallet, Double withDrawal) {
         History history = new History();
+        wallet = walletRepository.findById(wallet.getId()).get();
         if (wallet.getAccount().getActive()==true){
             wallet.setBalance(wallet.getBalance()-withDrawal);
             history.setType(HistoryTypeEnum.WITHDRAWAL);
             history.setTrxDate(new Timestamp(new Date().getTime()));
             history.setAmount(withDrawal);
+            history.setWallet(wallet);
             walletRepository.save(wallet);
             historyService.saveHistory(history);
         }

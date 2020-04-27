@@ -20,8 +20,12 @@ public class WalletController {
     public void withdrawalUpdate(@PathVariable String id,@RequestBody Wallet wallet, @RequestParam Double withdrawal){
         walletService.withDrawalWallet(wallet, withdrawal);
     }
+    @PostMapping("/first-top-up")
+    public void firstTopUp(@RequestBody Wallet wallet){
+        walletService.saveWallet(wallet);
+    }
 
-    @PostMapping("/top_up")
+    @PostMapping("/top-up")
     public void topUpWallet(@RequestBody Wallet wallet, @RequestParam Double topUpBalance){
      walletService.topUpWallet(wallet,topUpBalance);
     }
