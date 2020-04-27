@@ -10,4 +10,5 @@ public interface TransactionService {
     public Transaction getTransactionById(String id);
     public void deleteTransaction(String id);
     public Page<Transaction> transaction(Pageable pageable);
+//    public Page<Transaction> searchArtistByField(Pageable pageable, Transaction searchForm);
 }

@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.service.impl;
 
+import com.Sepotipi.tugas14.Jpa.TransactionJpaSpescification;
 import com.Sepotipi.tugas14.entity.*;
 import com.Sepotipi.tugas14.enums.HistoryTypeEnum;
 import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
@@ -103,4 +104,10 @@ public class TransactionServiceImpl implements TransactionService {
         Page<Transaction> transactions = transactionRepository.findAll(pageable);
         return transactions;
     }
+
+//    @Override
+//    public Page<Transaction> searchArtistByField(Pageable pageable, Transaction searchForm) {
+//        Page<Transaction> transactions = transactionRepository.findAll(TransactionJpaSpescification.findByLessThanAmount(searchForm), pageable);
+//        return transactions;
+//    }
 }
