@@ -1,6 +1,7 @@
 package com.Sepotipi.tugas14.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class Album {
     private String image;
 
     @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonIgnoreProperties(value = "album")
     public List<Song> songs = new ArrayList<>();
 
     @Transient

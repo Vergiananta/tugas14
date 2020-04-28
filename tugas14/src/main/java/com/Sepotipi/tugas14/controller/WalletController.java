@@ -16,8 +16,8 @@ public class WalletController {
     @Autowired
     WalletService walletService;
 
-    @PostMapping("/withdrawal/{id}")
-    public void withdrawalUpdate(@PathVariable String id,@RequestBody Wallet wallet, @RequestParam Double withdrawal){
+    @PostMapping("/withdrawal")
+    public void withdrawalUpdate(@RequestBody Wallet wallet, @RequestParam Double withdrawal){
         walletService.withDrawalWallet(wallet, withdrawal);
     }
     @PostMapping("/first-top-up")
@@ -29,10 +29,7 @@ public class WalletController {
     public void topUpWallet(@RequestBody Wallet wallet, @RequestParam Double topUpBalance){
      walletService.topUpWallet(wallet,topUpBalance);
     }
-    @PostMapping("/top-up/{id}")
-    public void topUpWallet2(@PathVariable String id,@RequestBody Wallet wallet, @RequestParam Double topUpBalance){
-        walletService.topUpWallet(wallet, topUpBalance);
-    }
+
     @GetMapping("/{id}")
     public Wallet getWalletById(@PathVariable String id){
         return walletService.getWallet(id);

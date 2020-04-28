@@ -39,21 +39,17 @@ public class WalletServiceImpl implements WalletService {
         History history = new History();
         wallet = walletRepository.findById(wallet.getId()).get();
         if (wallet.getAccount().getActive()==true){
-            wallet.setBalance(wallet.getBalance()+topUpBalance);
+            wallet.setBalance(wallet.getBalance() + topUpBalance);
             history.setType(HistoryTypeEnum.TOPUP);
             history.setTrxDate(new Timestamp(new Date().getTime()));
             history.setAmount(topUpBalance);
             history.setWallet(wallet);
-            historyService.saveHistory(history);
             walletRepository.save(wallet);
-//
-//            history.setAmount(topUpBalance);
-//            history.setType(HistoryTypeEnum.TOPUP);
-//            history.setTrxDate(new Timestamp(new Date().getTime()));
-//            history.setWallet(wallet);
-//            historyService.saveHistory(history);
+            historyService.saveHistory(history);
         }
     }
+
+
 
     @Override
     public void withDrawalWallet(Wallet wallet, Double withDrawal) {

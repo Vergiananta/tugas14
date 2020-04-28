@@ -7,4 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TransactionRepository extends JpaRepository<Transaction, String> {
+    public Page<Transaction> findAllByAmountLessThan(Double amount, Pageable pageable);
+    public Page<Transaction> findAllByAmountGreaterThan(Double amount, Pageable pageable);
 }

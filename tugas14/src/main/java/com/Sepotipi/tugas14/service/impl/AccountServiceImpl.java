@@ -1,9 +1,11 @@
 package com.Sepotipi.tugas14.service.impl;
 
 import com.Sepotipi.tugas14.entity.Account;
+import com.Sepotipi.tugas14.entity.Wallet;
 import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
 import com.Sepotipi.tugas14.repository.AccountRepository;
 import com.Sepotipi.tugas14.service.AccountService;
+import com.Sepotipi.tugas14.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,9 +19,16 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     AccountRepository accountRepository;
 
+    @Autowired
+    WalletService walletService;
+
     @Override
-    public Account saveAccount(Account account) {
-        return accountRepository.save(account);
+    public void signUp(Account account) {
+        Wallet wallet = new Wallet();
+        wallet.setBalance(0.0);
+        wallet.setAccount(account);
+        walletService.saveWallet(wallet);
+        accountRepository.save(account);
     }
 
     @Override

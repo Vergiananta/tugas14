@@ -17,8 +17,8 @@ public class AccountController {
     AccountService accountService;
 
     @PostMapping("/sign-up")
-    public void saveAccount(@RequestBody Account account){
-        accountService.saveAccount(account);
+    public void signUp(@RequestBody Account account){
+        accountService.signUp(account);
     }
 
     @GetMapping("/{id}")

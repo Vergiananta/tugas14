@@ -117,6 +117,17 @@ public class TransactionServiceImpl implements TransactionService {
         return transactions;
     }
 
+    @Override
+    public Page<Transaction> searchAmountLessThan(Transaction transaction, Pageable pageable) {
+        Page<Transaction> transactions = transactionRepository.findAllByAmountLessThan(transaction.getAmount(), pageable);
+        return transactions;
+    }
+    @Override
+    public Page<Transaction> searchAmountGreatherThan(Transaction transaction, Pageable pageable) {
+        Page<Transaction> transactions = transactionRepository.findAllByAmountGreaterThan(transaction.getAmount(), pageable);
+        return transactions;
+    }
+
 //    @Override
 //    public Page<Transaction> searchArtistByField(Pageable pageable, Transaction searchForm) {
 //        Page<Transaction> transactions = transactionRepository.findAll(TransactionJpaSpescification.findByLessThanAmount(searchForm), pageable);

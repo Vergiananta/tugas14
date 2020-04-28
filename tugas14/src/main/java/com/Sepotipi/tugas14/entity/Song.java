@@ -47,6 +47,7 @@ public class Song {
     public List<Playlist>playlists=new ArrayList<>();
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "item")
     public List<Transaction> transactions = new ArrayList<>();
 
     public Song() {
