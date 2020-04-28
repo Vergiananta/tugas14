@@ -8,6 +8,7 @@ public class Tugas14Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Tugas14Application.class, args);
+
 	}
 
 }

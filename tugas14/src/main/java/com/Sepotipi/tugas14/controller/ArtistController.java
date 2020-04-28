@@ -29,9 +29,9 @@ public class ArtistController {
         return artistService.getArtistById(id);
     }
 
-    @DeleteMapping("/artist")
-    public void deleteArtist(@RequestBody Artist artist){
-        artistService.deleteArtist(artist.getId());
+    @DeleteMapping("/{id}")
+    public void deleteArtist(@PathVariable String id){
+        artistService.deleteArtist(id);
     }
 
     @PostMapping
