@@ -40,7 +40,7 @@ public class ArtistController {
     }
 
 
-    @PostMapping("/img")
+    @PostMapping("/img/upload")
     public Artist saveArtistContaintImage(@RequestPart MultipartFile file, @RequestPart String photo) throws IOException {
 
         return artistService.saveArtistWithImage(file,photo);
@@ -49,7 +49,7 @@ public class ArtistController {
 
 //    @PostMapping("/img")
 //    public void saveArtistContaintImage(@RequestParam(value = "file") MultipartFile file, @RequestParam Artist photo) throws IOException {
-//        artistService.saveArtistWithImage(file,photo);
+//        artistService.uploadArtistWithImage(file,photo);
 ////        return artistService.saveArtistWithImage(file,photo);
 //
 //    }

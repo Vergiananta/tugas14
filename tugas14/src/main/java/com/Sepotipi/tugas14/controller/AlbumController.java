@@ -1,6 +1,7 @@
 package com.Sepotipi.tugas14.controller;
 
 import com.Sepotipi.tugas14.entity.Album;
+import com.Sepotipi.tugas14.entity.Artist;
 import com.Sepotipi.tugas14.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,11 +40,11 @@ public class AlbumController {
         Pageable pageable = PageRequest.of(page, size);
         return albumService.searchAlbum(searchForm, pageable);
     }
-
-    @PostMapping("/img")
+    @PostMapping("/img/upload")
     public Album saveAlbumContaintImage(@RequestPart MultipartFile file, @RequestPart String photo) throws IOException {
 
         return albumService.saveAlbumWithImage(file,photo);
 
     }
+
 }

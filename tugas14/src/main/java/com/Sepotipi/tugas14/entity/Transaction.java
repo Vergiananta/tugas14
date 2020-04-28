@@ -19,7 +19,7 @@ public class Transaction {
     @Column(name = "album_discount")
     private Double albumDiscount;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "song_id")
     @JsonIgnoreProperties(value = {"transaction"})
     public Song item;

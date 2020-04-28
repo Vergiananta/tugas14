@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface AccountService {
+    public Account saveAccount(Account account);
     public void signUp(Account account);
     public Account getAccount(String id);
     public Page<Account> getAllAccount(Pageable pageable);

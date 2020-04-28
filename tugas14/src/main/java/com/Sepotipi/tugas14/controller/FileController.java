@@ -1,6 +1,8 @@
 package com.Sepotipi.tugas14.controller;
 
+import com.Sepotipi.tugas14.entity.Album;
 import com.Sepotipi.tugas14.entity.Artist;
+import com.Sepotipi.tugas14.service.AlbumService;
 import com.Sepotipi.tugas14.service.ArtistService;
 import com.Sepotipi.tugas14.util.FileUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class FileController {
     @Autowired
     ArtistService artistService;
 
+    @Autowired
+    AlbumService albumService;
+
 
     @GetMapping("/artist/img/{id}")
     public ResponseEntity<Resource> getArtistPhoto(@PathVariable String id, HttpServletResponse request){
@@ -38,6 +43,26 @@ public class FileController {
         if (artist == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File Not Found.");
 
         Resource resource = fileUtil.read(artist.getPhoto());
+
+        String contentType = null;
+
+        try {
+            contentType = servletContext.getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File Not Found");
+        }
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+    @GetMapping("/album/img/{id}")
+    public ResponseEntity<Resource> getAlbumPhoto(@PathVariable String id, HttpServletResponse request){
+        Album album = albumService.getAlbumById(id);
+
+        if (album == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File Not Found.");
+
+        Resource resource = fileUtil.read(album.getImage());
 
         String contentType = null;
 

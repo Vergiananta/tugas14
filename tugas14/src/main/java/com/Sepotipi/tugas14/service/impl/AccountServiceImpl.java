@@ -23,6 +23,11 @@ public class AccountServiceImpl implements AccountService {
     WalletService walletService;
 
     @Override
+    public Account saveAccount(Account account) {
+        return accountRepository.save(account);
+    }
+
+    @Override
     public void signUp(Account account) {
         Wallet wallet = new Wallet();
         wallet.setBalance(0.0);

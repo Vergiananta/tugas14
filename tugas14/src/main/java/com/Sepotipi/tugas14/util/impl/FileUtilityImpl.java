@@ -18,7 +18,7 @@ import java.nio.file.StandardCopyOption;
 
 @Component
 public class FileUtilityImpl implements FileUtility {
-    private final Path storageLocation = Paths.get("uploads").toAbsolutePath().normalize();
+    private final Path storageLocation = Paths.get("/home/melvian/Materi/week-9/tugas14/tugas14/images/Artist Photos/").toAbsolutePath().normalize();
     @Override
     public String store(MultipartFile file, String destination) throws IOException {
         Path target = storageLocation.resolve(destination);
