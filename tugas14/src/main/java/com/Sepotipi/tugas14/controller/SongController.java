@@ -35,4 +35,20 @@ public class SongController {
         Pageable pageable = PageRequest.of(page, size);
         return songService.searchSong(searchForm, pageable);
     }
+
+    @GetMapping("/search-artist")
+    public Page<Song> searchByArtist(@RequestBody Song searchForm, @RequestParam(name = "page") Integer page, @RequestParam(name = "size") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        return songService.searchByArtist(searchForm, pageable);
+    }
+    @GetMapping("/search-album")
+    public Page<Song> searchByAlbum(@RequestBody Song searchForm, @RequestParam(name = "page") Integer page, @RequestParam(name = "size") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        return songService.searchByAlbum(searchForm, pageable);
+    }
+    @GetMapping("/search-genre")
+    public Page<Song> searchByGenre(@RequestBody Song searchForm, @RequestParam(name = "page") Integer page, @RequestParam(name = "size") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        return songService.searchByGenre(searchForm, pageable);
+    }
 }

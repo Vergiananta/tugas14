@@ -10,6 +10,7 @@ public interface TransactionService {
     public Transaction getTransactionById(String id);
     public void deleteTransaction(String id);
     public Page<Transaction> transaction(Pageable pageable);
+    public Page<Transaction> searcByTitle(Transaction transaction, Pageable pageable);
     public Page<Transaction> searchAmountLessThan(Transaction transaction, Pageable pageable);
     public Page<Transaction> searchAmountGreatherThan(Transaction transaction, Pageable pageable);
 

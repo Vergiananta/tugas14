@@ -41,4 +41,10 @@ public class TransactionController {
         Pageable pageable = PageRequest.of(page, size);
         return transactionService.searchAmountGreatherThan(transaction,pageable);
     }
+
+    @GetMapping("/search-title")
+    public Page<Transaction> searchByTitle(@RequestBody Transaction transaction, @RequestParam(name = "page") Integer page, @RequestParam(name = "size") Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        return  transactionService.searcByTitle(transaction, pageable);
+    }
 }

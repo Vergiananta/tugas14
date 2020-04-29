@@ -27,6 +27,9 @@ public class Transaction {
     @Transient
     public String albumId;
 
+    @Transient
+    private String title;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "wallet_id",nullable = false)
     @JsonIgnoreProperties(value = {"transaction"})
@@ -90,6 +93,14 @@ public class Transaction {
 
     public void setAlbumId(String albumId) {
         this.albumId = albumId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

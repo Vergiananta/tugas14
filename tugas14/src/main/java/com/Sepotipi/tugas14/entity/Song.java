@@ -41,6 +41,13 @@ public class Song {
 //    @Transient
 //    private String albumID;
 
+    @Transient
+    private String artistName;
+    @Transient
+    private String genreName;
+    @Transient
+    private String albumTitle;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "mst_song_has_playlist",joinColumns = {@JoinColumn(name = "song_id")},
             inverseJoinColumns = {@JoinColumn(name = "playlist_id")})
@@ -124,6 +131,31 @@ public class Song {
 //    public void setAlbumID(String albumID) {
 //        this.albumID = albumID;
 //    }
+
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public String getGenreName() {
+        return genreName;
+    }
+
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
+    }
+
+    public String getAlbumTitle() {
+        return albumTitle;
+    }
+
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
+    }
 
     @Override
     public boolean equals(Object o) {

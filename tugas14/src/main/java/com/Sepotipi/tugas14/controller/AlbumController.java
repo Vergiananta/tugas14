@@ -25,12 +25,12 @@ public class AlbumController {
     }
 
     @DeleteMapping
-    public void deleteArtist(@RequestBody Album album){
+    public void deleteAlbum(@RequestBody Album album){
         albumService.deleteAlbum(album.getId());
     }
 
     @PostMapping
-    public void saveSong(@RequestBody Album album){
+    public void saveAlbum(@RequestBody Album album){
         albumService.saveAlbum(album);
     }
 

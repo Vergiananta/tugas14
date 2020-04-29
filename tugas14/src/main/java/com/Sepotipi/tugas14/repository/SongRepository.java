@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SongRepository extends JpaRepository<Song, String>, JpaSpecificationExecutor<Song> {
+public interface SongRepository extends JpaRepository<Song, String>, JpaSpecificationExecutor<Song>  {
 
     public Page<Song> findAllByTitleContains(String title, Pageable pageable);
 }

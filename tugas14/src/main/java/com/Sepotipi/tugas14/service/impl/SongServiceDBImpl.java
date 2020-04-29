@@ -1,5 +1,6 @@
 package com.Sepotipi.tugas14.service.impl;
 
+import com.Sepotipi.tugas14.Jpa.SongJpaSpescification;
 import com.Sepotipi.tugas14.entity.Profile;
 import com.Sepotipi.tugas14.entity.Song;
 import com.Sepotipi.tugas14.exception.ResourceNotFoundException;
@@ -45,6 +46,22 @@ public class SongServiceDBImpl implements SongService {
     public Page<Song> searchSong(Song song, Pageable pageable) {
 
       Page<Song>songs = songRepository.findAllByTitleContains(song.getTitle(), pageable);
+        return songs;
+    }
+
+    @Override
+    public Page<Song> searchByArtist(Song song, Pageable pageable) {
+        Page<Song> songs = songRepository.findAll(SongJpaSpescification.searchByArtist(song), pageable);
+        return songs;
+    }
+    @Override
+    public Page<Song> searchByAlbum(Song song, Pageable pageable) {
+        Page<Song> songs = songRepository.findAll(SongJpaSpescification.searchByAlbum(song), pageable);
+        return songs;
+    }
+    @Override
+    public Page<Song> searchByGenre(Song song, Pageable pageable) {
+        Page<Song> songs = songRepository.findAll(SongJpaSpescification.searchByGenre(song), pageable);
         return songs;
     }
 }
